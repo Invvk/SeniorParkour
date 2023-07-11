@@ -1,0 +1,5 @@
+main: io.github.invvk.seniorparkour.SeniorParkour
+version: 1.0.0
+name: SeniorParkour
+author: Invvk
+api-version: 1.16

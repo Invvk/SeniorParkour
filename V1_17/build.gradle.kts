@@ -1,0 +1,17 @@
+plugins {
+    id("java")
+    id("io.papermc.paperweight.userdev") version "1.5.5"
+}
+
+group = "io.github.invvk"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    paperweight.paperDevBundle("1.17.1-R0.1-SNAPSHOT")
+    implementation(project(":NMS"))
+}
