@@ -3,9 +3,9 @@ package io.github.invvk.seniorparkour.config;
 import ch.jalu.configme.SettingsHolder;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
-import io.github.invvk.seniorparkour.config.holder.ConfigHolder;
-import io.github.invvk.seniorparkour.config.holder.MessageHolder;
-import io.github.invvk.seniorparkour.config.holder.ParkourHolder;
+import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
+import io.github.invvk.seniorparkour.config.holder.MessageProperties;
+import io.github.invvk.seniorparkour.config.holder.ParkourProperties;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -19,9 +19,9 @@ public class ConfigManager {
 
     public ConfigManager(@NonNull File dataFolder) {
         this.dataFolder = dataFolder;
-        config = construct("config", ConfigHolder.class);
-        message = construct("messages", MessageHolder.class);
-        parkour = construct("parkour", ParkourHolder.class);
+        config = construct("config", ConfigProperties.class);
+        message = construct("messages", MessageProperties.class);
+        parkour = construct("parkour", ParkourProperties.class);
     }
 
     private SettingsManager construct(String fileName, Class<? extends SettingsHolder> holder) {

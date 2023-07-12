@@ -6,3 +6,4 @@ rootProject.name = "seniorparkour"
 include("V1_17")
 include("NMS")
 include("V1_18")
+include("V1_19")
