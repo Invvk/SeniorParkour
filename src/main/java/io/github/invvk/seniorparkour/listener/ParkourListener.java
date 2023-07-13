@@ -1,6 +1,7 @@
 package io.github.invvk.seniorparkour.listener;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
+import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
 import io.github.invvk.seniorparkour.config.holder.MessageProperties;
 import io.github.invvk.seniorparkour.event.ParkourPlatePressEvent;
 import io.github.invvk.seniorparkour.event.PlateType;
@@ -76,7 +77,7 @@ public class ParkourListener implements Listener {
                 || parkourPlayer.getCheckpoint().getValue2() == null)
             return;
 
-        if (player.getFallDistance() > 3) {
+        if (player.getFallDistance() > SeniorParkour.inst().getConfig().getInt(ConfigProperties.PARKOUR_MAX_FALL_DISTANCE)) {
             var location = parkourPlayer.getCheckpoint().getValue2();
             location.setX(location.getBlockX() + 0.5);
             location.setZ(location.getBlockZ() + 0.5);

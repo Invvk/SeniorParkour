@@ -1,6 +1,7 @@
 package io.github.invvk.seniorparkour.utils;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
+import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -43,9 +44,11 @@ public class Utils {
         player.sendMessage(StrSubstitutor.replace(hex(SeniorParkour.inst().getCnfManager().getMessages().getConfig().getString(property)), keys));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void createPlate(Location location) {
         // TODO: add holograms
-        location.getBlock().setType(Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
+        Material mt = Material.getMaterial(SeniorParkour.inst().getConfig().getString(ConfigProperties.PARKOUR_PLATE_TYPE, "HEAVY_WEIGHTED_PRESSURE_PLATE"));
+        location.getBlock().setType(mt);
     }
 
     public static void removePlate(Location location) {

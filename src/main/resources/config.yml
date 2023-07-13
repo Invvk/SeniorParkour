@@ -5,3 +5,7 @@ hologram:
       - "&6Start"
     end:
       - "&b&lEnd"
+
+parkour:
+  max-fall-distance: 3
+  plate-type: HEAVY_WEIGHTED_PRESSURE_PLATE
