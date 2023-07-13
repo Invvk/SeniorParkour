@@ -1,0 +1,7 @@
+hologram:
+  height: 1.0
+  parkour:
+    start:
+      - "&6Start"
+    end:
+      - "&b&lEnd"

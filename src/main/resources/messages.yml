@@ -1,0 +1,25 @@
+global:
+  main-help: []
+  invalid-parkour-name: '&4(!) &cParkour with name ${name} doesn''t exists'
+  not-a-number: '&4(!) &c${input} &fis not a number!'
+create:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour create <name>'
+  already-exists: '&4(!) &cParkour with name ${name} already exists'
+  add-new-parkour: '&a(!) &fYou''ve created a new parkour with name &e${name}'
+delete:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour delete <name>'
+  delete-succes: '&a(!) &fYou''ve deleted parkour with name &e${name}'
+checkpoint:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour checkpoint <name>'
+  added-checkpoint: '&a(!) &fYou''ve added checkpoint #&e${id}'
+end:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour end <name>'
+  added-end: '&a(!) &fYou''ve added the end checkpoint for &e${name}'
+teleport:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour teleport <name> [checkpoint]'
+  invalid-checkpoint: '&4(!) &cSelected checkpoint doesn''t exists!'
+  success: '&a(!) &fYou''ve been teleported to &e${id}'
+player:
+  parkour-started: '&a(!) &fYou''ve started a parkour game!'
+  parkour-ended: '&a(!) &fYou''ve finished parkour in &a${m}:${s}:${ms}&f!'
+  parkour-checkpoint: '&a&l(!) &fCheckpoint &e#${checkpoint}'

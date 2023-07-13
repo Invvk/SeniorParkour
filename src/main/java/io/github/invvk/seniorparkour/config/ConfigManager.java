@@ -1,33 +1,16 @@
 package io.github.invvk.seniorparkour.config;
 
-import ch.jalu.configme.SettingsHolder;
-import ch.jalu.configme.SettingsManager;
-import ch.jalu.configme.SettingsManagerBuilder;
-import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
-import io.github.invvk.seniorparkour.config.holder.MessageProperties;
-import io.github.invvk.seniorparkour.config.holder.ParkourProperties;
+import io.github.invvk.seniorparkour.utils.Config;
 import lombok.Getter;
-import lombok.NonNull;
-
-import java.io.File;
 
 public class ConfigManager {
 
-    @Getter private final SettingsManager config, message, parkour;
+    @Getter private final Config config, messages, parkour;
 
-    private final File dataFolder;
-
-    public ConfigManager(@NonNull File dataFolder) {
-        this.dataFolder = dataFolder;
-        config = construct("config", ConfigProperties.class);
-        message = construct("messages", MessageProperties.class);
-        parkour = construct("parkour", ParkourProperties.class);
+    public ConfigManager() {
+        this.config = new Config("config", true);
+        this.messages = new Config("messages", true);
+        this.parkour = new Config("parkour");
     }
 
-    private SettingsManager construct(String fileName, Class<? extends SettingsHolder> holder) {
-        return SettingsManagerBuilder.withYamlFile(new File(dataFolder, fileName + ".yml"))
-                .useDefaultMigrationService()
-                .configurationData(holder)
-                .create();
-    }
 }
