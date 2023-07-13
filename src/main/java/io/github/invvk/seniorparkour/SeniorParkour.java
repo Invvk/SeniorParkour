@@ -2,6 +2,7 @@ package io.github.invvk.seniorparkour;
 
 import io.github.invvk.seniorparkour.commands.ParkourMainCommand;
 import io.github.invvk.seniorparkour.config.ConfigManager;
+import io.github.invvk.seniorparkour.database.StorageManager;
 import io.github.invvk.seniorparkour.game.GameManager;
 import io.github.invvk.seniorparkour.listener.BlockListener;
 import io.github.invvk.seniorparkour.listener.ParkourListener;
@@ -16,6 +17,8 @@ public class SeniorParkour extends JavaPlugin implements Listener {
 
     @Getter private ConfigManager cnfManager;
     @Getter private GameManager gameManager;
+
+    @Getter private StorageManager storageManager;
 
     @SuppressWarnings("DataFlowIssue")
     @Override
