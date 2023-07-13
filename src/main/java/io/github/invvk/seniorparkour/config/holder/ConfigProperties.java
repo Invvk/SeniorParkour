@@ -10,6 +10,6 @@ public class ConfigProperties {
     public final static String STORAGE_PASSWORD = "MySQL.password";
     public final static String STORAGE_DATABASE = "MySQL.database";
     public final static String STORAGE_TABLE_PREFIX = "MySQL.table-prefix";
-    public final static String STORAGE_DB_UPDATE_TIMER = "MySQL.database-update-timer";
+    public final static String STORAGE_DB_UPDATE_TIMER = "MySQL.database-update-timer-minutes";
 
 }
