@@ -7,7 +7,6 @@ import lombok.Getter;
 
 public class StorageManager {
 
-
     @Getter private final IStorage storage;
 
     public StorageManager() {

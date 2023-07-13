@@ -5,25 +5,25 @@ import com.zaxxer.hikari.HikariDataSource;
 import io.github.invvk.seniorparkour.SeniorParkour;
 import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
 import io.github.invvk.seniorparkour.database.manager.IDataManager;
-import io.github.invvk.seniorparkour.database.manager.MySQLDataManager;
+import io.github.invvk.seniorparkour.database.manager.MySQLUserDataImpl;
 import lombok.Getter;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 
 public class MySQLStorage implements IStorage {
 
+    @Getter
+    private String tablePrefix;
 
-    @Getter private String tablePrefix;
-
-    @Getter private String pdTable;
+    @Getter
+    private String pdTable;
 
     private HikariDataSource dataSource;
 
-    private MySQLDataManager dataManager;
+    private MySQLUserDataImpl dataManager;
 
     @Override
     public void init() {
@@ -34,8 +34,7 @@ public class MySQLStorage implements IStorage {
         HikariConfig config = new HikariConfig();
 
         config.setPoolName("SeniorParkour-Pool");
-        config.setJdbcUrl("jdbc:mysql://" + cnf.getString(ConfigProperties.STORAGE_HOST) + ":"
-                + cnf.getString(ConfigProperties.STORAGE_PORT) + "/" + cnf.getString(ConfigProperties.STORAGE_DATABASE));
+        config.setJdbcUrl("jdbc:mysql://" + cnf.getString(ConfigProperties.STORAGE_HOST) + ":" + cnf.getString(ConfigProperties.STORAGE_PORT) + "/" + cnf.getString(ConfigProperties.STORAGE_DATABASE));
         config.setUsername(cnf.getString(ConfigProperties.STORAGE_USER));
         config.setPassword(cnf.getString(ConfigProperties.STORAGE_PASSWORD));
         config.setIdleTimeout(10000);
@@ -53,16 +52,17 @@ public class MySQLStorage implements IStorage {
         dataSource = new HikariDataSource(config);
         this.initTable();
 
-        this.dataManager = new MySQLDataManager(this);
+        this.dataManager = new MySQLUserDataImpl(this);
     }
 
-    private void initTable() {
-        if (dataSource == null)
-            return;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement st = connection.prepareStatement(
-                     String.format("CREATE TABLE IF NOT EXISTS %s(uuid VARCHAR(36) NOT NULL, name VARCHAR(16) NOT NULL, PRIMARY KEY (uuid, name), UNIQUE (uuid), UNIQUE(name))", this.pdTable))) {
+    private void initTable() {
+        if (dataSource == null) return;
+
+        String TABLE_STATEMENT_GAMES = "CREATE TABLE IF NOT EXISTS %s(uuid VARCHAR(36) NOT NULL, game_id VARCHAR(30) NOT NULL, time LONG DEFAULT '0')";
+
+        try (var connection = dataSource.getConnection();
+             var st = connection.prepareStatement(String.format(TABLE_STATEMENT_GAMES, this.pdTable))) {
             st.executeUpdate();
         } catch (SQLException e) {
             SeniorParkour.inst().getLogger().log(Level.SEVERE, "Failed to create table", e);
@@ -71,8 +71,7 @@ public class MySQLStorage implements IStorage {
 
     @Override
     public void close() {
-        if (this.dataSource != null)
-            this.dataSource.close();
+        if (this.dataSource != null) this.dataSource.close();
     }
 
     @Override

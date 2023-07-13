@@ -5,6 +5,8 @@ import com.google.common.cache.CacheBuilder;
 import io.github.invvk.seniorparkour.SeniorParkour;
 import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
 import io.github.invvk.seniorparkour.database.manager.IDataManager;
+import io.github.invvk.seniorparkour.database.user.IUserManager;
+import io.github.invvk.seniorparkour.database.user.User;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 
