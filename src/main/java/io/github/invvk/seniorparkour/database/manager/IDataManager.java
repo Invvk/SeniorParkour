@@ -2,6 +2,7 @@ package io.github.invvk.seniorparkour.database.manager;
 
 import io.github.invvk.seniorparkour.database.user.User;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface IDataManager {
@@ -10,4 +11,5 @@ public interface IDataManager {
 
     void saveUser(User user);
 
+    List<TopPlayerDOA> getTopPlayers(String gameId);
 }

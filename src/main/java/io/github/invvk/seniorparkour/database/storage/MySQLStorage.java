@@ -59,7 +59,7 @@ public class MySQLStorage implements IStorage {
     private void initTable() {
         if (dataSource == null) return;
 
-        String TABLE_STATEMENT_GAMES = "CREATE TABLE IF NOT EXISTS %s(uuid VARCHAR(36) NOT NULL, game_id VARCHAR(30) NOT NULL, time LONG DEFAULT '0')";
+        String TABLE_STATEMENT_GAMES = "CREATE TABLE IF NOT EXISTS %s(uuid VARCHAR(36) NOT NULL, game_id VARCHAR(30) NOT NULL, time LONG)";
 
         try (var connection = dataSource.getConnection();
              var st = connection.prepareStatement(String.format(TABLE_STATEMENT_GAMES, this.pdTable))) {
