@@ -1,9 +1,6 @@
 package io.github.invvk.seniorparkour.utils;
 
-import ch.jalu.configme.properties.Property;
 import io.github.invvk.seniorparkour.SeniorParkour;
-import io.github.invvk.seniorparkour.config.holder.ParkourProperties;
-import io.github.invvk.seniorparkour.config.holder.bean.ParkourBeanMap;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,16 +35,12 @@ public class Utils {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static void sendCnfMessage(Player player, Property<String> property) {
-        player.sendMessage(hex(SeniorParkour.getInstance().getCnfManager().getMessage().getProperty(property)));
+    public static void sendCnfMessage(Player player, String property) {
+        player.sendMessage(hex(SeniorParkour.inst().getCnfManager().getMessages().getConfig().getString(property)));
     }
 
-    public static void sendCnfMessage(Player player, Property<String> property, Map<String, String> keys) {
-        player.sendMessage(StrSubstitutor.replace(hex(SeniorParkour.getInstance().getCnfManager().getMessage().getProperty(property)), keys));
-    }
-
-    public static ParkourBeanMap getParkourConfigMap() {
-        return SeniorParkour.getInstance().getCnfManager().getParkour().getProperty(ParkourProperties.PARKOURS);
+    public static void sendCnfMessage(Player player, String property, Map<String, String> keys) {
+        player.sendMessage(StrSubstitutor.replace(hex(SeniorParkour.inst().getCnfManager().getMessages().getConfig().getString(property)), keys));
     }
 
     public static void createPlate(Location location) {
@@ -66,5 +59,6 @@ public class Utils {
 
         return a.distance(b) < 1.0;
     }
+
 
 }
