@@ -18,7 +18,7 @@ public class Config {
                 name + ".yml");
         if (!file.exists()) {
             if (fromResources)
-                SeniorParkour.inst().saveResource("messages.yml", false);
+                SeniorParkour.inst().saveResource(name + ".yml", false);
             else {
                 try {
                     file.createNewFile();
