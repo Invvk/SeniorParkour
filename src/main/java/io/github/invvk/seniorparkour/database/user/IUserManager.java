@@ -1,4 +1,4 @@
-package io.github.invvk.seniorparkour.database;
+package io.github.invvk.seniorparkour.database.user;
 
 import java.util.Optional;
 import java.util.UUID;

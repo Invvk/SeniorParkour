@@ -1,6 +1,6 @@
 package io.github.invvk.seniorparkour.database.manager;
 
-import io.github.invvk.seniorparkour.database.User;
+import io.github.invvk.seniorparkour.database.user.User;
 
 import java.util.UUID;
 
