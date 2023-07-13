@@ -2,27 +2,31 @@ package io.github.invvk.seniorparkour;
 
 import io.github.invvk.seniorparkour.commands.ParkourMainCommand;
 import io.github.invvk.seniorparkour.config.ConfigManager;
-import io.github.invvk.seniorparkour.utils.Utils;
+import io.github.invvk.seniorparkour.game.GameManager;
+import io.github.invvk.seniorparkour.listener.BlockListener;
+import io.github.invvk.seniorparkour.listener.ParkourListener;
+import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SeniorParkour extends JavaPlugin implements Listener {
 
     private static SeniorParkour instance;
 
-    private ConfigManager cnfManager;
+    @Getter private ConfigManager cnfManager;
+    @Getter private GameManager gameManager;
 
     @SuppressWarnings("DataFlowIssue")
     @Override
     public void onEnable() {
         instance = this;
-        cnfManager = new ConfigManager(this.getDataFolder());
+        cnfManager = new ConfigManager();
+        gameManager = new GameManager();
+
         getCommand("parkour").setExecutor(new ParkourMainCommand());
-        Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ParkourListener(), this);
     }
 
     @Override
@@ -30,25 +34,8 @@ public class SeniorParkour extends JavaPlugin implements Listener {
         instance = null;
     }
 
-    public ConfigManager getCnfManager() {
-        return cnfManager;
-    }
 
-    public static SeniorParkour getInstance() {
-        if (instance == null)
-            throw new RuntimeException("You can't access SeniorParkour instance before the plugin loads");
+    public static SeniorParkour inst() {
         return instance;
-    }
-
-    @EventHandler
-    public void breakblock(BlockBreakEvent event) {
-        if (event.getBlock().getType() == Material.HEAVY_WEIGHTED_PRESSURE_PLATE) {
-           for (var parkour: Utils.getParkourConfigMap().getParkours().values()) {
-               if (parkour.isParkourPlate(event.getBlock().getLocation())) {
-                   event.setCancelled(true);
-                   break;
-               }
-           }
-        }
     }
 }

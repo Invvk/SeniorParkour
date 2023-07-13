@@ -1,5 +1,6 @@
 package io.github.invvk.seniorparkour.commands.subcmd;
 
+import io.github.invvk.seniorparkour.SeniorParkour;
 import io.github.invvk.seniorparkour.config.holder.MessageProperties;
 import io.github.invvk.seniorparkour.utils.Utils;
 import io.github.invvk.seniorparkour.utils.commands.AbstractCommand;
@@ -11,7 +12,6 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class TeleportSubCommand extends AbstractCommand {
     @Override
@@ -24,7 +24,7 @@ public class TeleportSubCommand extends AbstractCommand {
 
         String parkour = args[1].toLowerCase();
 
-        var parkourMap = Utils.getParkourConfigMap().getParkours();
+        var parkourMap = SeniorParkour.inst().getGameManager().getParkours();
 
         if (!parkourMap.containsKey(parkour)) {
             Utils.sendCnfMessage(player, MessageProperties.INVALID_PARKOUR,
@@ -34,7 +34,7 @@ public class TeleportSubCommand extends AbstractCommand {
 
         // Create
         var parkourData = parkourMap.get(parkour);
-        int checkpoint = 0;
+        int checkpoint = -1;
 
         if (args.length == 3) {
             try {
@@ -45,7 +45,7 @@ public class TeleportSubCommand extends AbstractCommand {
             }
         }
 
-        Location checkpointLoc = parkourData.getCheckpoints().get(checkpoint);
+        Location checkpointLoc = checkpoint == -1 ? parkourData.getStart() : parkourData.getCheckpoints().get(checkpoint);
         if (checkpointLoc == null) {
             Utils.sendCnfMessage(player, MessageProperties.TELEPORT_CMD_INVALID_CHECKPOINT);
             return;
@@ -63,7 +63,7 @@ public class TeleportSubCommand extends AbstractCommand {
     public List<String> onTab(CommandSender sender, String[] args) {
         if (args.length == 2) {
             final String parkourName = args[1];
-            final Set<String> set = Utils.getParkourConfigMap().getParkours().keySet();
+            final Set<String> set = SeniorParkour.inst().getGameManager().getParkours().keySet();
             return set.stream().filter(s -> s.startsWith(parkourName))
                     .toList();
         } else if (args.length == 3) {
@@ -72,7 +72,7 @@ public class TeleportSubCommand extends AbstractCommand {
 
             try {
                 Integer.parseInt(indexStr);
-                var parkour = Utils.getParkourConfigMap().getParkours().get(parkourName);
+                var parkour = SeniorParkour.inst().getGameManager().getParkours().get(parkourName);
                 if (parkour == null) {
                     return null;
                 }

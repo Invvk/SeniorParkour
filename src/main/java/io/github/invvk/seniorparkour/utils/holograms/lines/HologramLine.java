@@ -2,8 +2,6 @@ package io.github.invvk.seniorparkour.utils.holograms.lines;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
 import io.github.invvk.seniorparkour.utils.Utils;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -38,7 +36,7 @@ public class HologramLine implements ILine {
         this.stand.setSmall(true);
         this.stand.setCustomNameVisible(true);
         this.stand.setCustomName(Utils.hex(text));
-        this.stand.setMetadata("sp", new FixedMetadataValue(SeniorParkour.getInstance(), true));
+        this.stand.setMetadata("sp", new FixedMetadataValue(SeniorParkour.inst(), true));
     }
 
     @Override
