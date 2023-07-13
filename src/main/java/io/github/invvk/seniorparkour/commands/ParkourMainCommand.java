@@ -26,7 +26,8 @@ public class ParkourMainCommand extends MainCommand {
 
     @Override
     public List<String> help(CommandSender sender) {
-        return SeniorParkour.getInstance().getCnfManager()
-                .getMessage().getProperty(MessageProperties.COMMAND_HELP);
+        return SeniorParkour.inst().getCnfManager()
+                .getMessages().getConfig()
+                .getStringList(MessageProperties.COMMAND_HELP);
     }
 }

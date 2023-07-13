@@ -2,8 +2,6 @@ package io.github.invvk.seniorparkour.commands.subcmd;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
 import io.github.invvk.seniorparkour.config.holder.MessageProperties;
-import io.github.invvk.seniorparkour.config.holder.ParkourProperties;
-import io.github.invvk.seniorparkour.config.holder.bean.ParkourCnfData;
 import io.github.invvk.seniorparkour.utils.Utils;
 import io.github.invvk.seniorparkour.utils.commands.AbstractCommand;
 import org.bukkit.command.CommandSender;
@@ -25,7 +23,7 @@ public class CheckpointSubCommand extends AbstractCommand {
 
         String parkour = args[1].toLowerCase();
 
-        var parkourMap = Utils.getParkourConfigMap().getParkours();
+        var parkourMap = SeniorParkour.inst().getGameManager().getParkours();
 
         if (!parkourMap.containsKey(parkour)) {
             Utils.sendCnfMessage(player, MessageProperties.INVALID_PARKOUR,
@@ -35,13 +33,11 @@ public class CheckpointSubCommand extends AbstractCommand {
 
         // Create
         var parkourData = parkourMap.get(parkour);
-        int index = parkourMap.size() + 1;
+        int index = parkourData.getCheckpoints().size() + 1;
         parkourData.getCheckpoints().put(index, player.getLocation());
 
         // Save & Update
-        SeniorParkour.getInstance().getCnfManager().getParkour()
-                .setProperty(ParkourProperties.PARKOURS,
-                        Utils.getParkourConfigMap());
+        SeniorParkour.inst().getGameManager().save(parkourData);
 
         // Create pressure plate
         Utils.createPlate(player.getLocation());
@@ -54,7 +50,7 @@ public class CheckpointSubCommand extends AbstractCommand {
     public List<String> onTab(CommandSender sender, String[] args) {
         if (args.length == 2) {
             final String parkourName = args[1];
-            final Set<String> set = Utils.getParkourConfigMap().getParkours().keySet();
+            final Set<String> set = SeniorParkour.inst().getGameManager().getParkours().keySet();
             return set.stream().filter(s -> s.startsWith(parkourName))
                     .collect(Collectors.toList());
         }

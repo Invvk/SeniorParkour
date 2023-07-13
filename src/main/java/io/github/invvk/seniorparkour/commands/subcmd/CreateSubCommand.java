@@ -2,8 +2,7 @@ package io.github.invvk.seniorparkour.commands.subcmd;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
 import io.github.invvk.seniorparkour.config.holder.MessageProperties;
-import io.github.invvk.seniorparkour.config.holder.ParkourProperties;
-import io.github.invvk.seniorparkour.config.holder.bean.ParkourCnfData;
+import io.github.invvk.seniorparkour.config.ParkourGameData;
 import io.github.invvk.seniorparkour.utils.Utils;
 import io.github.invvk.seniorparkour.utils.commands.AbstractCommand;
 import org.bukkit.command.CommandSender;
@@ -23,8 +22,8 @@ public class CreateSubCommand extends AbstractCommand {
         }
 
         String parkour = args[1].toLowerCase();
-
-        var parkours = Utils.getParkourConfigMap().getParkours();
+        
+        var parkours = SeniorParkour.inst().getGameManager().getParkours();
 
         if (parkours.containsKey(parkour)) {
             Utils.sendCnfMessage(player, MessageProperties.CREATE_CMD_EXISTS,
@@ -33,15 +32,12 @@ public class CreateSubCommand extends AbstractCommand {
         }
 
         // Create
-        ParkourCnfData parkourData = new ParkourCnfData(parkour);
+        ParkourGameData parkourData = new ParkourGameData(parkour);
         parkourData.setStart(player.getLocation());
 
         // Save & Update
         parkours.put(parkour, parkourData);
-        SeniorParkour.getInstance().getCnfManager().getParkour()
-                .setProperty(ParkourProperties.PARKOURS,
-                        Utils.getParkourConfigMap());
-
+        SeniorParkour.inst().getGameManager().save(parkourData);
 
         Utils.createPlate(player.getLocation());
 
