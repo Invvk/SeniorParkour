@@ -18,11 +18,11 @@ public class ParkourPlayer {
     private final Tuple<Integer, Location> checkpoint = new Tuple<>(0, null);
 
     public boolean isValidCheckpoint(int next) {
-        return next - checkpoint.getValue1() == 1;
+        return next - checkpoint.v1() == 1;
     }
 
     public void setCheckpoint(Location checkpointLoc) {
-        checkpoint.setValue1(checkpoint.getValue1() + 1);
+        checkpoint.setValue1(checkpoint.v1() + 1);
         checkpoint.setValue2(checkpointLoc);
     }
 
