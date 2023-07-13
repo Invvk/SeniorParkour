@@ -88,6 +88,23 @@ public class DeleteSubCommand extends AbstractCommand {
             final Set<String> set = SeniorParkour.inst().getGameManager().getParkours().keySet();
             return set.stream().filter(s -> s.startsWith(parkourName))
                     .collect(Collectors.toList());
+        } else if (args.length == 3) {
+            final String parkourName = args[1];
+            final String indexStr = args[2];
+            if (indexStr.isBlank()) return null;
+
+            try {
+                Integer.parseInt(indexStr);
+                var parkour = SeniorParkour.inst().getGameManager().getParkours().get(parkourName);
+                if (parkour == null) {
+                    return null;
+                }
+
+                return parkour.getCheckpoints().keySet().stream().map(String::valueOf)
+                        .filter(s -> s.startsWith(indexStr)).toList();
+            } catch (NumberFormatException ignored) {
+                return null;
+            }
         }
         return null;
     }

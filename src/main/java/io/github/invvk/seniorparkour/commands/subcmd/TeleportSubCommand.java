@@ -69,6 +69,7 @@ public class TeleportSubCommand extends AbstractCommand {
         } else if (args.length == 3) {
             final String parkourName = args[1];
             final String indexStr = args[2];
+            if (indexStr.isBlank()) return null;
 
             try {
                 Integer.parseInt(indexStr);
@@ -80,7 +81,7 @@ public class TeleportSubCommand extends AbstractCommand {
                 return parkour.getCheckpoints().keySet().stream().map(String::valueOf)
                         .filter(s -> s.startsWith(indexStr)).toList();
             } catch (NumberFormatException ignored) {
-                return List.of(Utils.hex("&cCheckpoint should be a number"));
+                return null;
             }
         }
         return null;
