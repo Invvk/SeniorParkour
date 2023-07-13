@@ -47,7 +47,7 @@ public class TeleportSubCommand extends AbstractCommand {
 
         Location checkpointLoc = checkpoint == -1 ? parkourData.getStart() : parkourData.getCheckpoints().get(checkpoint);
         if (checkpointLoc == null) {
-            Utils.sendCnfMessage(player, MessageProperties.TELEPORT_CMD_INVALID_CHECKPOINT);
+            Utils.sendCnfMessage(player, MessageProperties.INVALID_CHECKPOINT);
             return;
         }
 

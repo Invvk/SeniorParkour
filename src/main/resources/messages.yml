@@ -2,6 +2,8 @@ global:
   main-help: []
   invalid-parkour-name: '&4(!) &cParkour with name ${name} doesn''t exists'
   not-a-number: '&4(!) &c${input} &fis not a number!'
+  invalid-checkpoint: '&4(!) &cSelected checkpoint doesn''t exists!'
+
 create:
   args: '&4(!) &cInvalid args: #ffcccb/parkour create <name>'
   already-exists: '&4(!) &cParkour with name ${name} already exists'
@@ -17,7 +19,6 @@ end:
   added-end: '&a(!) &fYou''ve added the end checkpoint for &e${name}'
 teleport:
   args: '&4(!) &cInvalid args: #ffcccb/parkour teleport <name> [checkpoint]'
-  invalid-checkpoint: '&4(!) &cSelected checkpoint doesn''t exists!'
   success: '&a(!) &fYou''ve been teleported to &e${id}'
 player:
   parkour-started: '&a(!) &fYou''ve started a parkour game!'
