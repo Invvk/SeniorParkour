@@ -5,6 +5,7 @@ import io.github.invvk.seniorparkour.event.ParkourPlatePressEvent;
 import io.github.invvk.seniorparkour.event.PlateType;
 import io.github.invvk.seniorparkour.utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,6 +36,8 @@ public class BlockListener implements Listener {
                 block.getType() == Material.HEAVY_WEIGHTED_PRESSURE_PLATE)) {
             var loc = block.getLocation();
             var player = event.getPlayer();
+            if (player.getGameMode() == GameMode.CREATIVE || player.getAllowFlight() || player.isFlying()) return;
+
             for (var parkour: SeniorParkour.inst().getGameManager().getParkours().values()) {
                 int result = parkour.isParkourPlate(loc);
                 if (result != -1) {
