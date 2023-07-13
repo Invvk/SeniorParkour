@@ -73,12 +73,12 @@ public class ParkourListener implements Listener {
         var optional = SeniorParkour.inst().getGameManager().getParkourPlayer(player.getUniqueId());
         if (optional.isEmpty()) return;
         var parkourPlayer = optional.get();
-        if (parkourPlayer.getCheckpoint().getValue1() == 0
-                || parkourPlayer.getCheckpoint().getValue2() == null)
+        if (parkourPlayer.getCheckpoint().v1() == 0
+                || parkourPlayer.getCheckpoint().v2() == null)
             return;
 
         if (player.getFallDistance() > SeniorParkour.inst().getConfig().getInt(ConfigProperties.PARKOUR_MAX_FALL_DISTANCE)) {
-            var location = parkourPlayer.getCheckpoint().getValue2();
+            var location = parkourPlayer.getCheckpoint().v2();
             location.setX(location.getBlockX() + 0.5);
             location.setZ(location.getBlockZ() + 0.5);
             location.setYaw(player.getLocation().getYaw());
