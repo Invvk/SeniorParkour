@@ -96,6 +96,7 @@ public class GameManager {
         config.set(key + ".start", data.getStart());
         config.set(key + ".end", data.getEnd());
 
+        config.set(key + ".checkpoints", null);
         for (var entry: data.getCheckpoints().entrySet()) {
             String chkPointKey = key + ".checkpoints." + entry.getKey();
             config.set(chkPointKey, entry.getValue());
