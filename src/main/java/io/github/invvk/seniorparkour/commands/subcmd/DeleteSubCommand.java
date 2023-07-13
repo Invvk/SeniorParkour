@@ -2,11 +2,14 @@ package io.github.invvk.seniorparkour.commands.subcmd;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
 import io.github.invvk.seniorparkour.config.holder.MessageProperties;
+import io.github.invvk.seniorparkour.utils.Tuple;
 import io.github.invvk.seniorparkour.utils.Utils;
 import io.github.invvk.seniorparkour.utils.commands.AbstractCommand;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +19,7 @@ public class DeleteSubCommand extends AbstractCommand {
     @Override
     public void onCommand(CommandSender sender, String[] args) {
         final Player player = (Player) sender;
-        if (args.length != 2) {
+        if (args.length < 2) {
             Utils.sendCnfMessage(player, MessageProperties.DELETE_CMD_ARGS);
             return;
         }
@@ -32,12 +35,46 @@ public class DeleteSubCommand extends AbstractCommand {
         }
         var parkourData = parkourMap.get(parkour);
 
+        if (args.length == 3) {
+            String checkpointStr = args[2];
+            int checkpoint = -1;
+            try {
+                checkpoint = Integer.parseInt(checkpointStr);
+            } catch (NumberFormatException ignored) {
+                Utils.sendCnfMessage(player, MessageProperties.NAN,
+                        Map.of("input", parkour));
+                return;
+            }
+
+            parkourData.getCheckpoints().forEach((x,y) -> System.out.println(x));
+            if (!parkourData.getCheckpoints().containsKey(checkpoint)) {
+                Utils.sendCnfMessage(player, MessageProperties.INVALID_CHECKPOINT);
+                return;
+            }
+
+            List<Tuple<Integer, Location>> toModify = new ArrayList<>();
+
+            for (var chkpoint2Modify: parkourData.getCheckpoints().entrySet()) {
+                if (chkpoint2Modify.getKey() <= checkpoint)
+                    continue;
+                toModify.add(Tuple.of(chkpoint2Modify.getKey(), chkpoint2Modify.getValue()));
+            }
+
+            toModify.forEach(x -> {
+                parkourData.getCheckpoints().remove(x.v1());
+                x.setValue1(x.v1() - 1);
+                parkourData.getCheckpoints().put(x.v1(), x.v2());
+            });
+
+            SeniorParkour.inst().getGameManager().save(parkourData);
+            return;
+        }
         Utils.removePlate(parkourData.getStart());
         Utils.removePlate(parkourData.getEnd());
         parkourData.getCheckpoints().values().forEach(Utils::removePlate);
 
         parkourMap.remove(parkour);
-        
+
         SeniorParkour.inst().getGameManager().save(parkourData);
 
         Utils.sendCnfMessage(player, MessageProperties.DELETE_CMD_REMOVED,
