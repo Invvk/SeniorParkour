@@ -2,6 +2,7 @@ package io.github.invvk.seniorparkour.nms;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import org.bukkit.Location;
@@ -10,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class HologramV1_19 implements IHologram {
     @Override
-    public void spawnPlayerHologram(Player player, String message) {
+    public int spawn(Player player, String message) {
         var craftPlayer = (CraftPlayer) player;
         var world = craftPlayer.getHandle().getLevel();
 
@@ -25,10 +26,13 @@ public class HologramV1_19 implements IHologram {
         craftPlayer.getHandle().connection.send(cb);
         ClientboundSetEntityDataPacket metadata = new ClientboundSetEntityDataPacket(as.getId(), as.getEntityData().getNonDefaultValues());
         craftPlayer.getHandle().connection.send(metadata);
+        return as.getId();
     }
 
     @Override
-    public void destroyPlayerHologram(Player player) {
-
+    public void destroy(Player player, int... ids) {
+        ClientboundRemoveEntitiesPacket re = new ClientboundRemoveEntitiesPacket(ids);
+        var cPlayer = ((CraftPlayer)player);
+        cPlayer.getHandle().connection.send(re);
     }
 }

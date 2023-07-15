@@ -4,8 +4,19 @@ import org.bukkit.entity.Player;
 
 public interface IHologram {
 
-    void spawnPlayerHologram(Player player, String message);
+    /**
+     * Spawn hologram that is specific per player
+     * @param player player to show hologram
+     * @param message message for the player
+     * @return entity id
+     */
+    int spawn(Player player, String message);
 
-    void destroyPlayerHologram(Player player);
+
+    /**
+     * Destroy a hologram
+     * @param id hologram id
+     */
+    void destroy(Player player, int... ids);
 
 }
