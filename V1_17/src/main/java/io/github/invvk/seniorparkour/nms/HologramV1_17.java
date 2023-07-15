@@ -12,21 +12,19 @@ import org.bukkit.entity.Player;
 
 public class HologramV1_17 implements IHologram {
     @Override
-    public int spawn(Player player, String message) {
+    public int spawn(Player player, Location loc, String message) {
         var craftPlayer = (CraftPlayer) player;
         Level world = craftPlayer.getHandle().getLevel();
 
-        Location loc = player.getLocation();
-
         ArmorStand armorStand = new ArmorStand(world, loc.getX(), loc.getY(), loc.getZ());
         armorStand.setNoGravity(true);
-        armorStand.setCustomName(new TextComponent("Hello There UwU " + player.getName()));
+        armorStand.setCustomName(new TextComponent(message));
         armorStand.setCustomNameVisible(true);
         armorStand.setInvisible(true);
         armorStand.setSmall(true);
         ClientboundAddEntityPacket sp = new ClientboundAddEntityPacket(armorStand);
-        craftPlayer.getHandle().networkManager.send(sp);
         ClientboundSetEntityDataPacket metadata = new ClientboundSetEntityDataPacket(armorStand.getId(), armorStand.getEntityData(), true);
+        craftPlayer.getHandle().networkManager.send(sp);
         craftPlayer.getHandle().networkManager.send(metadata);
         return armorStand.getId();
     }

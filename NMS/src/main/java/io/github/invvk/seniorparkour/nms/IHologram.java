@@ -1,5 +1,6 @@
 package io.github.invvk.seniorparkour.nms;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public interface IHologram {
@@ -10,7 +11,7 @@ public interface IHologram {
      * @param message message for the player
      * @return entity id
      */
-    int spawn(Player player, String message);
+    int spawn(Player player, Location loc, String message);
 
 
     /**
