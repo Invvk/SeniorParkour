@@ -7,14 +7,28 @@ MySQL:
   table-prefix: "parkour_"
   database-update-timer-minutes: 30
 
+gui:
+  top-players:
+    head-displayName: '&e#${pos} &a${name}'
+    lore:
+      - "&d${time}"
+  player-info:
 
 hologram:
-  height: 1.0
+  line-height: 0.5
   parkour:
     start:
       - "&6Start"
     end:
       - "&b&lEnd"
+    checkpoint:
+      - "&bCheckpoint #${id}"
+  top:
+    base:
+      - "&e&l${parkourName}"
+      - "&fYour position is &b#${userPosition} &f- with time &e${time}"
+    top_players: "&a#${id} &b${name} - &e${time}"
+
 
 parkour:
   max-fall-distance: 3

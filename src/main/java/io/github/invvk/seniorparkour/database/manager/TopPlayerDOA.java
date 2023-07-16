@@ -1,6 +1,9 @@
 package io.github.invvk.seniorparkour.database.manager;
 
-import lombok.AllArgsConstructor;
+public record TopPlayerDOA(String name, long time, int position) {
 
-@AllArgsConstructor(staticName = "of")
-public record TopPlayerDOA(String name, long time, int position) {}
+    public static TopPlayerDOA of(String name, long time, int position) {
+        return new TopPlayerDOA(name, time, position);
+    }
+
+}

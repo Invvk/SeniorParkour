@@ -2,6 +2,7 @@ package io.github.invvk.seniorparkour.config.holder;
 
 public class ConfigProperties {
 
+    public final static String HOLOGRAM_LINE_HEIGHT = "hologram.line-height";
     public final static String PARKOUR_MAX_FALL_DISTANCE = "parkour.max-fall-distance";
     public final static String PARKOUR_PLATE_TYPE = "parkour.plate-type";
     public final static String STORAGE_HOST = "MySQL.host";

@@ -19,6 +19,7 @@ dependencies {
     implementation(project(":V1_19", "reobf"))
     implementation(project(":V1_18", "reobf"))
     implementation(project(":V1_17", "reobf"))
+    implementation(project(":V1_16"))
     compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
     compileOnly("org.spigotmc:spigot:1.16.5-R0.1-SNAPSHOT")
     implementation("com.zaxxer:HikariCP:4.0.3")

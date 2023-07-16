@@ -16,7 +16,8 @@ public class MySQLUserDataImpl implements IDataManager {
 
     private static final String PLAYER_SELECT = "SELECT game_id, MIN(time) AS 'min' FROM %s where uuid=? GROUP BY game_id;";
     private static final String PLAYER_SAVE = "UPDATE %s SET time=? WHERE uuid=?;";
-    private static final String SELECT_TOP = "SELECT DISTINCT uuid, MIN(time) AS 'min' FROM %s where game_id=? GROUP BY uuid ORDER BY min ASC LIMIT 3;";
+    private static final String PLAYER_SAVE_NEW = "INSERT INTO %s VALUES(?,?,?,?);";
+    private static final String SELECT_TOP = "SELECT DISTINCT uuid, MIN(time) AS 'min' FROM %s where game_id=? GROUP BY uuid ORDER BY min ASC LIMIT %d;";
     private final MySQLStorage storage;
 
     @SneakyThrows
@@ -24,13 +25,13 @@ public class MySQLUserDataImpl implements IDataManager {
         final User user = new User(uuid, name);
         var games = user.getParkours();
         try (var con = storage.getConnection();
-             var st = con.prepareStatement(String.format(PLAYER_SELECT, storage.getPdTable()));) {
+             var st = con.prepareStatement(String.format(PLAYER_SELECT, storage.getPdTable()))) {
             st.setString(1, uuid.toString());
             try (var rs = st.executeQuery()) {
                 while (rs.next()) {
                     String gameName = rs.getString("game_id");
                     games.put(gameName, UserParkourGames.of(gameName, rs.getLong("min"),
-                            false));
+                            false, false));
                 }
             }
         }
@@ -41,26 +42,34 @@ public class MySQLUserDataImpl implements IDataManager {
     @SneakyThrows
     public void saveUser(User user) {
         try (var connection = storage.getConnection();
-             var st = connection.prepareStatement(String.format(PLAYER_SAVE, storage.getPdTable()))) {
+             var st = connection.prepareStatement(String.format(PLAYER_SAVE, storage.getPdTable()));
+        var st2 = connection.prepareStatement(String.format(PLAYER_SAVE_NEW, storage.getPdTable()))) {
             for (var entry : user.getParkours().entrySet()) {
                 var data = entry.getValue();
                 if (data.isModified()) {
                     st.setLong(1, data.getTime());
                     st.setString(2, user.getUniqueId().toString());
                     st.addBatch();
+                } else if (data.isNewlyAdded()) {
+                    st2.setString(1, user.getUniqueId().toString());
+                    st2.setString(2, user.getName());
+                    st2.setString(3, data.getName());
+                    st2.setLong(4, data.getTime());
+                    st2.addBatch();
                 }
             }
             st.executeBatch();
+            st2.executeBatch();
         }
 
     }
 
     @SneakyThrows
     @Override
-    public List<TopPlayerDOA> getTopPlayers(String gameId) {
+    public List<TopPlayerDOA> getTopPlayers(String gameId, int limit) {
         List<TopPlayerDOA> players = new ArrayList<>();
         try (var con = storage.getConnection();
-             var st = con.prepareStatement(String.format(SELECT_TOP, storage.getPdTable()))) {
+             var st = con.prepareStatement(String.format(SELECT_TOP, storage.getPdTable(), limit))) {
             st.setString(1, gameId);
             try (var rs = st.executeQuery()) {
                 int i = 1;

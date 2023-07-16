@@ -11,5 +11,5 @@ public interface IDataManager {
 
     void saveUser(User user);
 
-    List<TopPlayerDOA> getTopPlayers(String gameId);
+    List<TopPlayerDOA> getTopPlayers(String gameId, int limit);
 }

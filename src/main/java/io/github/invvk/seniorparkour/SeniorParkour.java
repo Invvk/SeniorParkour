@@ -37,7 +37,6 @@ public class SeniorParkour extends JavaPlugin implements Listener {
         instance = null;
     }
 
-
     public static SeniorParkour inst() {
         return instance;
     }
