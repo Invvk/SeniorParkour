@@ -1,5 +1,6 @@
 package io.github.invvk.seniorparkour.commands.subcmd;
 
+import io.github.invvk.seniorparkour.SeniorParkour;
 import io.github.invvk.seniorparkour.nms.HologramLineV1_19;
 import io.github.invvk.seniorparkour.utils.commands.AbstractCommand;
 import org.bukkit.command.CommandSender;

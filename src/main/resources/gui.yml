@@ -1,0 +1,69 @@
+top-players:
+  title: "Top players"
+  size: 5
+  items:
+    player-head:
+      displayName: "&e#%position% &f- &b%name%"
+      lore:
+        - "&fTime: &d${time}"
+      starting-slot: 0
+    next:
+      slot: 41
+      type: ARROW
+      displayName: "&6Next"
+    previous:
+      slot: 39
+      type: ARROW
+      displayName: "&6Previous"
+
+parkour-info:
+  title: "%game% info"
+  size: 4
+  items:
+    start:
+      slot: 4
+      type: EMERALD_BLOCK
+      displayName: "&aStart position"
+      lore:
+        - "&d%location%"
+        - ""
+        - "&eClick to teleport"
+    end:
+      slot: 5
+      type: REDSTONE_BLOCK
+      displayName: "&cEnd position"
+      lore:
+        - "&d%location%"
+        - ""
+        - "&eClick to teleport"
+    top:
+      slot: 6
+      type: DIAMOND_BLOCK
+      displayName: "&cTop Hologram position"
+      lore:
+        - "&d%location%"
+        - ""
+        - "&eClick to teleport"
+    checkpoints:
+      starting-slot: 18
+      items-per-page: 10
+      type: GOLDEN_BLOCK
+      displayName: "&6#%id%"
+      lore:
+        - "&d%location%"
+        - ""
+        - "&eClick to teleport"
+
+
+player-stats:
+  title: "Your stats"
+  size: 4
+  items:
+    parkours:
+      starting-slot: 0
+      items-per-page: 20
+      type: NETHER_STAR
+      displayName: "&d%parkourName%"
+      lore:
+        - "&fBest time: &a%time%"
+        - "&fPosition: &e#%position%"

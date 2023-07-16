@@ -16,19 +16,11 @@ gui:
 
 hologram:
   line-height: 0.5
-  parkour:
-    start:
-      - "&6Start"
-    end:
-      - "&b&lEnd"
-    checkpoint:
-      - "&bCheckpoint #${id}"
   top:
-    base:
-      - "&e&l${parkourName}"
-      - "&fYour position is &b#${userPosition} &f- with time &e${time}"
-    top_players: "&a#${id} &b${name} - &e${time}"
+    interval-seconds: 5
 
+scoreboard:
+  update-interval-ticks: 10
 
 parkour:
   max-fall-distance: 3

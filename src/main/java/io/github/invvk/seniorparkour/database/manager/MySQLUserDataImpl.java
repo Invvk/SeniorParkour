@@ -1,12 +1,14 @@
 package io.github.invvk.seniorparkour.database.manager;
 
+import io.github.invvk.seniorparkour.database.storage.MySQLStorage;
 import io.github.invvk.seniorparkour.database.user.User;
 import io.github.invvk.seniorparkour.database.user.UserParkourGames;
-import io.github.invvk.seniorparkour.database.storage.MySQLStorage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +20,15 @@ public class MySQLUserDataImpl implements IDataManager {
     private static final String PLAYER_SAVE = "UPDATE %s SET time=? WHERE uuid=?;";
     private static final String PLAYER_SAVE_NEW = "INSERT INTO %s VALUES(?,?,?,?);";
     private static final String SELECT_TOP = "SELECT DISTINCT uuid, MIN(time) AS 'min' FROM %s where game_id=? GROUP BY uuid ORDER BY min ASC LIMIT %d;";
+    private static final String SELECT_PLAYER_RANK =
+            """
+            select * from
+            (select t.time, t.uuid, DENSE_RANK() OVER (ORDER BY t.time ASC) 'rank' FROM
+            (SELECT uuid, MIN(time) as 'time' from %s where game_id=? group by uuid)
+             AS t)
+             AS rt
+            where rt.uuid=?;
+                    """;
     private final MySQLStorage storage;
 
     @SneakyThrows
@@ -25,15 +36,31 @@ public class MySQLUserDataImpl implements IDataManager {
         final User user = new User(uuid, name);
         var games = user.getParkours();
         try (var con = storage.getConnection();
-             var st = con.prepareStatement(String.format(PLAYER_SELECT, storage.getPdTable()))) {
+             var st = con.prepareStatement(String.format(PLAYER_SELECT, storage.getPdTable()));) {
             st.setString(1, uuid.toString());
             try (var rs = st.executeQuery()) {
                 while (rs.next()) {
                     String gameName = rs.getString("game_id");
                     games.put(gameName, UserParkourGames.of(gameName, rs.getLong("min"),
-                            false, false));
+                            -1, false, false));
                 }
             }
+
+            try (PreparedStatement rank = con.prepareStatement(String.format(SELECT_PLAYER_RANK, storage.getPdTable()))){
+                for (var parkourGame: user.getParkours().entrySet()) {
+                    var key = parkourGame.getKey();
+                    rank.setString(1, key);
+                    rank.setString(2, uuid.toString());
+                    try (ResultSet rs = rank.executeQuery()) {
+                        if (rs.next()) {
+                            user.getParkours().get(key).setPosition(rs.getInt("rank"));
+                        }
+                    } finally {
+                        rank.clearParameters();
+                    }
+                }
+            }
+
         }
 
         return user;

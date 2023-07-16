@@ -75,7 +75,7 @@ public class DeleteSubCommand extends AbstractCommand {
 
         parkourMap.remove(parkour);
 
-        SeniorParkour.inst().getGameManager().save(parkourData);
+        SeniorParkour.inst().getGameManager().delete(parkourData);
 
         Utils.sendCnfMessage(player, MessageProperties.DELETE_CMD_REMOVED,
                 Map.of("name", parkour));

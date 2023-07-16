@@ -17,14 +17,17 @@ public enum ServerVersion {
     public static ServerVersion get() {
         String packageName = Bukkit.getServer().getClass().getPackage().getName();
         String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-        return find(Integer.valueOf(version.trim()));
+        return find(version.trim());
     }
 
-    private static ServerVersion find(int version) {
-        for (var ver: values()) {
-            if (ver.getVersion() == version) return ver;
-        }
-        return UNKNOWN;
+    private static ServerVersion find(String version) {
+        return switch (version) {
+            case "v1_19_R3" -> V1_19;
+            case "v1_18_R2" -> V1_18;
+            case "v1_17_R1" -> V1_17;
+            case "v1_16_R3" -> V1_16;
+            default -> UNKNOWN;
+        };
     }
 
 }

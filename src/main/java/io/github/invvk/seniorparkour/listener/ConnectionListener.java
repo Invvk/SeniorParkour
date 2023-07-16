@@ -1,0 +1,36 @@
+package io.github.invvk.seniorparkour.listener;
+
+import io.github.invvk.seniorparkour.SeniorParkour;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.UUID;
+
+public class ConnectionListener implements Listener {
+
+    @EventHandler
+    public void onAsyncJoin(AsyncPlayerPreLoginEvent event) {
+        final UUID uuid = event.getUniqueId();
+        final String name = event.getName();
+
+        var user = SeniorParkour.inst().getUserManager().createUser(uuid, name);
+        System.out.println(user.getName());
+    }
+
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        var player = event.getPlayer();
+        SeniorParkour.inst().getHologramManager().spawn(player);
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        SeniorParkour.inst().getHologramManager().destroy(event.getPlayer());
+        SeniorParkour.inst().getUserManager().invalidate(event.getPlayer().getUniqueId());
+    }
+
+}

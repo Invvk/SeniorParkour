@@ -1,6 +1,7 @@
 package io.github.invvk.seniorparkour.commands.subcmd;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
+import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
 import io.github.invvk.seniorparkour.config.holder.MessageProperties;
 import io.github.invvk.seniorparkour.config.ParkourGameData;
 import io.github.invvk.seniorparkour.utils.Utils;
@@ -39,7 +40,8 @@ public class CreateSubCommand extends AbstractCommand {
         parkours.put(parkour, parkourData);
         SeniorParkour.inst().getGameManager().save(parkourData);
 
-        Utils.createPlate(player.getLocation());
+        Utils.createPlate(player.getLocation(), MessageProperties.HOLOGRAM_PARKOUR_START);
+        SeniorParkour.inst().getHologramManager().spawnAll();
 
         Utils.sendCnfMessage(player, MessageProperties.CREATE_CMD_CREATED,
                 Map.of("name", parkour));

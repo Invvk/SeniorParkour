@@ -1,6 +1,7 @@
 package io.github.invvk.seniorparkour.game;
 
 import io.github.invvk.seniorparkour.utils.Tuple;
+import io.github.invvk.seniorparkour.utils.scoreboard.IScoreboard;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,8 +15,9 @@ public class ParkourPlayer {
 
     private final UUID uuid;
     private final String gameName;
-    @Setter private long time = System.currentTimeMillis();
+    @Setter private long startTime = System.currentTimeMillis();
     private final Tuple<Integer, Location> checkpoint = new Tuple<>(0, null);
+    @Getter @Setter private IScoreboard scoreboard;
 
     public boolean isValidCheckpoint(int next) {
         return next - checkpoint.v1() == 1;

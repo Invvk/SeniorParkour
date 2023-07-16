@@ -18,8 +18,22 @@ public class MessageProperties {
     public static final String END_CMD_CREATED = "end.added-end";
     public static final String TELEPORT_CMD_ARGS = "teleport.args";
     public static final String TELEPORT_CMD_SUCCESS = "teleport.success";
+
+    public static final String TOP_PLAYERS_USAGE = "top.args";
+    public static final String SET_TOP_USAGE = "set-top.args";
+    public static final String SET_TOP_SUCCESS = "set-top.success";
+
     public static final String PLAYER_GAME_STARTED = "player.parkour-started";
     public static final String PLAYER_GAME_ENDED = "player.parkour-ended";
     public static final String PLAYER_GAME_CHECKPOINT = "player.parkour-checkpoint";
 
+    public static final String HOLOGRAM_PARKOUR_START = "hologram.parkour.start";
+    public static final String HOLOGRAM_PARKOUR_END = "hologram.parkour.end";
+    public static final String HOLOGRAM_PARKOUR_CHECKPOINT = "hologram.parkour.checkpoint";
+    public static final String HOLOGRAM_PARKOUR_TOP = "hologram.parkour.top";
+
+    public static final String SCOREBOARD_TITLE = "scoreboard.title";
+    public static final String SCOREBOARD_LINES = "scoreboard.lines";
+    public static final String GUI_LAST_PAGE = "gui.last-page";
+    public static final String GUI_FIRST_PAGE = "gui.first-page";
 }

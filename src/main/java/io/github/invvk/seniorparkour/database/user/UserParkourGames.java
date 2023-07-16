@@ -9,6 +9,7 @@ public class UserParkourGames {
 
     private final String name;
     private long time;
+    private int position;
     private boolean modified;
     private boolean newlyAdded;
 

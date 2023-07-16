@@ -1,6 +1,7 @@
 package io.github.invvk.seniorparkour.commands.subcmd;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
+import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
 import io.github.invvk.seniorparkour.config.holder.MessageProperties;
 import io.github.invvk.seniorparkour.utils.Utils;
 import io.github.invvk.seniorparkour.utils.commands.AbstractCommand;
@@ -39,7 +40,8 @@ public class EndSubCommand extends AbstractCommand {
         SeniorParkour.inst().getGameManager().save(parkourData);
 
         // Create pressure plate
-        Utils.createPlate(player.getLocation());
+        Utils.createPlate(player.getLocation(), MessageProperties.HOLOGRAM_PARKOUR_END);
+        SeniorParkour.inst().getHologramManager().spawnAll();
 
         Utils.sendCnfMessage(player, MessageProperties.END_CMD_CREATED,
                 Map.of("name", parkour));

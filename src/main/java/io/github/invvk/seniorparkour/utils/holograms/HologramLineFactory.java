@@ -18,9 +18,4 @@ public class HologramLineFactory {
         };
     }
 
-    public static AbstractHologramLine create(Location loc, String text) {
-        return new SimpleHologramLine(loc, text);
-    }
-
-
 }

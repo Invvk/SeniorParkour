@@ -1,3 +1,28 @@
+Hologram:
+  parkour:
+    start:
+      - "&6Start"
+    end:
+      - "&b&lEnd"
+    checkpoint:
+      - "&bCheckpoint %id%"
+  top:
+      - "&e&l%parkourName%"
+      - "&fYour position is &b#%userPosition% &f- with time &e%time%"
+      - "%id_1% - %name_1% - %time_1%"
+      - "%id_2% - %name_2% - %time_2%"
+      - "%id_3% - %name_3% - %time_3%"
+
+scoreboard:
+  title: "Parkour %parkourName%"
+  lines:
+    - "Current time: %time%"
+    - "position: %position%"
+
+gui:
+  last-page: "&c&l(!) &fYou are at the last page!"
+  first-page: "&c&l(!) &fYou are at the first page!"
+
 global:
   main-help: []
   invalid-parkour-name: '&4(!) &cParkour with name ${name} doesn''t exists'
@@ -22,5 +47,10 @@ teleport:
   success: '&a(!) &fYou''ve been teleported to &e${id}'
 player:
   parkour-started: '&a(!) &fYou''ve started a parkour game!'
-  parkour-ended: '&a(!) &fYou''ve finished parkour in &a${m}:${s}:${ms}&f!'
+  parkour-ended: '&a(!) &fYou''ve finished parkour in &a${time}&f!'
   parkour-checkpoint: '&a&l(!) &fCheckpoint &e#${checkpoint}'
+top:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour teleport <name> [checkpoint]'
+set-top:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour settop <name>'
+  success: '&a(!) &fYou''ve set top 3 player hologram to &e${name}'

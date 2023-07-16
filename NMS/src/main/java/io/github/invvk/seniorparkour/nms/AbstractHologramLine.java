@@ -26,8 +26,7 @@ public abstract class AbstractHologramLine {
     public abstract void update(Player player, String text);
     public abstract void destroy(Player player);
 
-    public boolean isPacket() {
-        return true;
+    public final String getText() {
+        return text;
     }
-
 }

@@ -1,10 +1,13 @@
 package io.github.invvk.seniorparkour.config;
 
+import io.github.invvk.seniorparkour.database.manager.TopPlayerDOA;
 import io.github.invvk.seniorparkour.utils.Utils;
 import lombok.Data;
 import org.bukkit.Location;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -13,7 +16,10 @@ public class ParkourGameData {
     private final String name;
     private Location start;
     private Location end;
+    private Location top;
     private final Map<Integer, Location> checkpoints = new HashMap<>();
+
+    private final List<TopPlayerDOA> topPlayers = new ArrayList<>();
 
     /**
      * determine whether the pressure plate belongs to a parkour game or not.

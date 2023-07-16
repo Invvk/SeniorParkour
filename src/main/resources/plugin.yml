@@ -3,6 +3,8 @@ version: 1.0.0
 name: SeniorParkour
 author: Invvk
 api-version: 1.16
+libraries:
+  - io.github.rysefoxx.inventory:RyseInventory-Plugin:1.5.7
 
 commands:
   parkour:

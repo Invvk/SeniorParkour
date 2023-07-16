@@ -4,8 +4,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.level.Level;
 import org.bukkit.Location;
@@ -13,6 +11,8 @@ import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class HologramLineV1_19 extends AbstractHologramLine {
+
+    private ArmorStand ar;
 
     public HologramLineV1_19(Location loc, String text) {
         super(loc, text);
@@ -26,28 +26,24 @@ public class HologramLineV1_19 extends AbstractHologramLine {
         var craftPlayer = (CraftPlayer) player;
         Level world = craftPlayer.getHandle().getLevel();
 
-        ArmorStand armorStand = new ArmorStand(world, loc.getX(), loc.getY(), loc.getZ());
-        armorStand.setNoGravity(true);
-        armorStand.setCustomName(Component.literal(text));
-        armorStand.setCustomNameVisible(true);
-        armorStand.setInvisible(true);
-        armorStand.setSmall(true);
-        ClientboundAddEntityPacket sp = new ClientboundAddEntityPacket(armorStand);
-        ClientboundSetEntityDataPacket metadata = new ClientboundSetEntityDataPacket(armorStand.getId(), armorStand.getEntityData().getNonDefaultValues());
+        this.ar = new ArmorStand(world, loc.getX(), loc.getY(), loc.getZ());
+        ar.setNoGravity(true);
+        ar.setCustomName(Component.literal(text));
+        ar.setCustomNameVisible(true);
+        ar.setInvisible(true);
+        ar.setSmall(true);
+        ClientboundAddEntityPacket sp = new ClientboundAddEntityPacket(ar);
+        ClientboundSetEntityDataPacket metadata = new ClientboundSetEntityDataPacket(ar.getId(), ar.getEntityData().getNonDefaultValues());
         craftPlayer.getHandle().connection.send(sp);
         craftPlayer.getHandle().connection.send(metadata);
-        this.id = armorStand.getId();
+        this.id = ar.getId();
 
     }
 
     @Override
     public void update(Player player, String text) {
+        if (ar == null) return;
         var craftPlayer = (CraftPlayer) player;
-        Entity e = craftPlayer.getHandle().getLevel().getEntity(id);
-        if (e == null) return;
-        if (e.getType() != EntityType.ARMOR_STAND) return;
-
-        ArmorStand ar = (ArmorStand) e;
         ar.setCustomName(Component.literal(text));
 
         ClientboundSetEntityDataPacket metadata = new ClientboundSetEntityDataPacket(ar.getId(), ar.getEntityData().getNonDefaultValues());
@@ -55,27 +51,14 @@ public class HologramLineV1_19 extends AbstractHologramLine {
         this.text = text;
     }
 
-    public void update(Player player, String text, int id) {
-        var craftPlayer = (CraftPlayer) player;
-        Entity e = craftPlayer.getHandle().getLevel().getEntity(id);
-        if (e == null) return;
-        if (e.getType() != EntityType.ARMOR_STAND) return;
-
-        ArmorStand ar = (ArmorStand) e;
-        ar.setCustomName(Component.literal(text));
-
-        ClientboundSetEntityDataPacket metadata = new ClientboundSetEntityDataPacket(ar.getId(), ar.getEntityData().getNonDefaultValues());
-        craftPlayer.getHandle().connection.send(metadata);
-//        this.text = text;
-    }
 
     @Override
     public void destroy(Player player) {
-        if (id == -1) return;
-        ClientboundRemoveEntitiesPacket re = new ClientboundRemoveEntitiesPacket(id);
+        if (ar == null) return;
+        ClientboundRemoveEntitiesPacket re = new ClientboundRemoveEntitiesPacket(ar.getId());
         var cPlayer = ((CraftPlayer)player);
         cPlayer.getHandle().connection.send(re);
-        this.id = -1;
+        this.ar = null;
     }
 
 }

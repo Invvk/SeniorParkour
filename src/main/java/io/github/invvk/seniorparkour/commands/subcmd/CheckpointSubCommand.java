@@ -1,6 +1,7 @@
 package io.github.invvk.seniorparkour.commands.subcmd;
 
 import io.github.invvk.seniorparkour.SeniorParkour;
+import io.github.invvk.seniorparkour.config.holder.ConfigProperties;
 import io.github.invvk.seniorparkour.config.holder.MessageProperties;
 import io.github.invvk.seniorparkour.utils.Utils;
 import io.github.invvk.seniorparkour.utils.commands.AbstractCommand;
@@ -40,7 +41,8 @@ public class CheckpointSubCommand extends AbstractCommand {
         SeniorParkour.inst().getGameManager().save(parkourData);
 
         // Create pressure plate
-        Utils.createPlate(player.getLocation());
+        Utils.createPlate(player.getLocation(), MessageProperties.HOLOGRAM_PARKOUR_CHECKPOINT, index);
+        SeniorParkour.inst().getHologramManager().spawnAll();
 
         Utils.sendCnfMessage(player, MessageProperties.CHECKPOINT_CMD_CREATED,
                 Map.of("id", String.valueOf(index)));
