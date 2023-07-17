@@ -7,13 +7,6 @@ MySQL:
   table-prefix: "parkour_"
   database-update-timer-minutes: 30
 
-gui:
-  top-players:
-    head-displayName: '&e#${pos} &a${name}'
-    lore:
-      - "&d${time}"
-  player-info:
-
 hologram:
   line-height: 0.5
   top:

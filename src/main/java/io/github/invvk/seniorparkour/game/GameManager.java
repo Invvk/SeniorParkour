@@ -105,6 +105,19 @@ public class GameManager {
         players.remove(uuid);
     }
 
+    public void terminate(Player player) {
+        var uuid = player.getUniqueId();
+        if (getParkourPlayer(uuid).isEmpty()) return;
+
+        var data = players.get(uuid);
+        var score = data.getScoreboard();
+        if (score != null)
+            score.deactivate();
+        Utils.sendCnfMessage(player,
+                MessageProperties.PLAYER_GAME_TERMINATED);
+        players.remove(uuid);
+    }
+
     public Optional<ParkourPlayer> getParkourPlayer(UUID uuid) {
         return Optional.ofNullable(players.get(uuid));
     }

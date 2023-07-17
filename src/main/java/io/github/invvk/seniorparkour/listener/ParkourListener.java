@@ -72,7 +72,26 @@ public class ParkourListener implements Listener {
         var player = event.getPlayer();
         var optional = SeniorParkour.inst().getGameManager().getParkourPlayer(player.getUniqueId());
         if (optional.isEmpty()) return;
+
         var parkourPlayer = optional.get();
+
+        if (player.isFlying()) {
+            SeniorParkour.inst().getGameManager().terminate(player);
+            var location = SeniorParkour.inst().getGameManager()
+                            .getParkours()
+                                    .get(parkourPlayer.getGameName())
+                                            .getStart();
+
+            location.setX(location.getBlockX() + 0.5);
+            location.setZ(location.getBlockZ() + 0.5);
+            location.setYaw(player.getLocation().getYaw());
+            location.setPitch(player.getLocation().getPitch());
+
+            player.teleport(location);
+            player.setVelocity(new Vector(0, 0 ,0));
+            return;
+        }
+
         if (parkourPlayer.getCheckpoint().v1() == 0
                 || parkourPlayer.getCheckpoint().v2() == null)
             return;

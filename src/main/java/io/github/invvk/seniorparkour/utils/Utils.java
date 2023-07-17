@@ -206,8 +206,21 @@ public class Utils {
         if (optional.isPresent()) {
             var user = optional.get();
             var userParkour = user.getParkours().get(data.getName());
-            map.put("position", userParkour == null ? "unranked" : String.valueOf(userParkour.getPosition()));
-            map.put("time", userParkour == null ? "99:99:99" : Utils.formatTime(System.currentTimeMillis() - parkourPlayer.getStartTime()));
+            map.put("position", userParkour == null ? "unknown" : String.valueOf(userParkour.getPosition()));
+            map.put("time", userParkour == null ? "unknown" : Utils.formatTime(System.currentTimeMillis() - parkourPlayer.getStartTime()));
+        }
+        return map;
+    }
+
+    public static Map<String,String> constructPlaceholders(Player player, ParkourGameData data) {
+        Map<String, String> map = new HashMap<>();
+        map.put("parkourName", data.getName());
+        var optional = SeniorParkour.inst().getUserManager().getUser(player.getUniqueId());
+        if (optional.isPresent()) {
+            var user = optional.get();
+            var userParkour = user.getParkours().get(data.getName());
+            map.put("position", userParkour == null ? "unknown" : String.valueOf(userParkour.getPosition()));
+            map.put("time", userParkour == null ? "unknown" : Utils.formatTime(userParkour.getTime()));
         }
         return map;
     }

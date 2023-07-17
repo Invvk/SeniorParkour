@@ -25,6 +25,7 @@ public class MessageProperties {
 
     public static final String PLAYER_GAME_STARTED = "player.parkour-started";
     public static final String PLAYER_GAME_ENDED = "player.parkour-ended";
+    public static final String PLAYER_GAME_TERMINATED = "player.parkour-terminated";
     public static final String PLAYER_GAME_CHECKPOINT = "player.parkour-checkpoint";
 
     public static final String HOLOGRAM_PARKOUR_START = "hologram.parkour.start";
@@ -36,4 +37,7 @@ public class MessageProperties {
     public static final String SCOREBOARD_LINES = "scoreboard.lines";
     public static final String GUI_LAST_PAGE = "gui.last-page";
     public static final String GUI_FIRST_PAGE = "gui.first-page";
+    public static final String STATS_USAGE = "stats.args";
+    public static final String STATS_OFFLINE_PLAYER = "stats.offline-player";
+    public static final String INFO_ARGS = "info.args";
 }

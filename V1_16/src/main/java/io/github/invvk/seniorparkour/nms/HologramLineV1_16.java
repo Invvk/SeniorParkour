@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 
 public class HologramLineV1_16 extends AbstractHologramLine {
 
+    private EntityArmorStand eas;
+
     public HologramLineV1_16(Location loc, String text) {
         super(loc, text);
     }
@@ -19,7 +21,7 @@ public class HologramLineV1_16 extends AbstractHologramLine {
         var cPlayer = ((CraftPlayer) player);
         World world = cPlayer.getHandle().getWorld();
 
-        EntityArmorStand eas = new EntityArmorStand(world, loc.getX(), loc.getY(), loc.getZ());
+        eas = new EntityArmorStand(world, loc.getX(), loc.getY(), loc.getZ());
         eas.setInvisible(true);
         eas.setSmall(true);
         eas.setCustomNameVisible(true);
@@ -36,15 +38,6 @@ public class HologramLineV1_16 extends AbstractHologramLine {
     public void update(Player player, String text) {
         if (id == -1) spawn(player);
         var cPlayer = ((CraftPlayer) player);
-
-        Entity e = cPlayer.getHandle().getWorld().getEntity(this.id);
-        if (e == null)
-            return;
-
-        if (e.getEntityType() != EntityTypes.ARMOR_STAND)
-            return;
-
-        EntityArmorStand eas = (EntityArmorStand) e;
         eas.setCustomName(new ChatComponentText(text));
 
         PacketPlayOutEntityMetadata metadata = new PacketPlayOutEntityMetadata(eas.getId(), eas.getDataWatcher(), true);

@@ -14,15 +14,19 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RequiredArgsConstructor
-public class TopPlayerInventoryProvider implements InventoryProvider {
+public class TopPlayerInventoryProvider extends AbstractInventoryProvider {
 
     private final ParkourGameData data;
-    private final ConfigurationSection cnf;
+
+    public TopPlayerInventoryProvider(ParkourGameData data, ConfigurationSection cnf) {
+        super(cnf);
+        this.data = data;
+    }
 
     @Override
     public void init(Player player, InventoryContents contents) {
@@ -39,6 +43,11 @@ public class TopPlayerInventoryProvider implements InventoryProvider {
 
             ItemStack stack = GUIConfigManager.buildItem(cnf, "player-head",
                     placeholders);
+
+            var skull = (SkullMeta) stack.getItemMeta();
+            skull.setOwner(topPlayer.name());
+            stack.setItemMeta(skull);
+
             pagination.addItem(stack);
         }
 

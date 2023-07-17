@@ -23,6 +23,12 @@ gui:
   last-page: "&c&l(!) &fYou are at the last page!"
   first-page: "&c&l(!) &fYou are at the first page!"
 
+player:
+  parkour-started: '&a(!) &fYou''ve started a parkour game!'
+  parkour-ended: '&a(!) &fYou''ve finished parkour in &a${time}&f!'
+  parkour-terminated: '&a(!) &fYou''ve been eliminated for flying!'
+  parkour-checkpoint: '&a&l(!) &fCheckpoint &e#${checkpoint}'
+
 global:
   main-help: []
   invalid-parkour-name: '&4(!) &cParkour with name ${name} doesn''t exists'
@@ -45,12 +51,13 @@ end:
 teleport:
   args: '&4(!) &cInvalid args: #ffcccb/parkour teleport <name> [checkpoint]'
   success: '&a(!) &fYou''ve been teleported to &e${id}'
-player:
-  parkour-started: '&a(!) &fYou''ve started a parkour game!'
-  parkour-ended: '&a(!) &fYou''ve finished parkour in &a${time}&f!'
-  parkour-checkpoint: '&a&l(!) &fCheckpoint &e#${checkpoint}'
 top:
-  args: '&4(!) &cInvalid args: #ffcccb/parkour teleport <name> [checkpoint]'
+  args: '&4(!) &cInvalid args: #ffcccb/parkour top <name>'
 set-top:
   args: '&4(!) &cInvalid args: #ffcccb/parkour settop <name>'
   success: '&a(!) &fYou''ve set top 3 player hologram to &e${name}'
+stats:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour stats <name>'
+  offline-player: "&4(!) &fPlayer &c%name% &fis offline"
+info:
+  args: '&4(!) &cInvalid args: #ffcccb/parkour info <name>'
