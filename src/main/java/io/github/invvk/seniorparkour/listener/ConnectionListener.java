@@ -19,8 +19,7 @@ public class ConnectionListener implements Listener {
         final UUID uuid = event.getUniqueId();
         final String name = event.getName();
 
-        var user = SeniorParkour.inst().getUserManager().createUser(uuid, name);
-        System.out.println(user.getName());
+        SeniorParkour.inst().getUserManager().createUser(uuid, name);
     }
 
 
